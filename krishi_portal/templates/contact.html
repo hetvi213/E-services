@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Contact | Krishi Seva Portal{% endblock %}
+{% block content %}
+<header class="page-header py-5">
+    <div class="container py-3">
+        <p class="section-kicker text-warning mb-2">We are here to help</p>
+        <h1 class="display-5 fw-bold">Service Enquiry</h1>
+        <p class="lead mb-0">Tell us what you need and our support team will guide you.</p>
+    </div>
+</header>
+<section class="py-5 bg-light-subtle">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm p-2 p-md-4">
+                    <div class="card-body">
+                        <form method="post" novalidate>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Full name *</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ request.form.get('name', current_user.name) }}" maxlength="120" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone number *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" value="{{ request.form.get('phone', current_user.phone or '') }}" maxlength="20" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="email" class="form-label">Email address *</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ request.form.get('email', current_user.email) }}" maxlength="255" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="service_id" class="form-label">Service of interest *</label>
+                                    {% set selected_id = request.form.get('service_id') or request.args.get('service_id') %}
+                                    <select class="form-select" id="service_id" name="service_id">
+                                        <option value="">Select a service</option>
+                                        {% for service in services %}
+                                            <option value="{{ service.id }}" {{ 'selected' if selected_id|string == service.id|string }}>{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label">How can we help? *</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" required>{{ request.form.get('message', '') }}</textarea>
+                                </div>
+                                <div class="col-12 pt-2">
+                                    <button type="submit" class="btn btn-success btn-lg px-4">Submit Enquiry</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,5 @@
+<nav class="admin-tabs mb-4" aria-label="Administrator sections">
+    <a class="{{ 'active' if request.endpoint == 'main.admin_dashboard' }}" href="{{ url_for('main.admin_dashboard') }}"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a class="{{ 'active' if request.endpoint == 'main.admin_analytics' }}" href="{{ url_for('main.admin_analytics') }}"><i class="bi bi-pie-chart"></i> Analytics</a>
+    <a class="{{ 'active' if request.endpoint in ['main.admin_settings', 'main.admin_edit_service'] }}" href="{{ url_for('main.admin_settings') }}"><i class="bi bi-gear"></i> Settings</a>
+</nav>

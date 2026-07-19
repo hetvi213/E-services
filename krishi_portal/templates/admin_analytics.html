@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin Analytics | Krishi Seva Portal{% endblock %}
+{% block content %}
+<header class="admin-header py-5"><div class="container"><p class="section-kicker text-warning mb-2">Reporting</p><h1 class="display-5 fw-bold">Service Analytics</h1><p class="lead mb-0">Compare enquiries and successful completions across services.</p></div></header>
+<section class="py-5 bg-light-subtle"><div class="container">{% include "_admin_nav.html" %}<div class="row g-4"><div class="col-lg-7"><div class="chart-card"><h2 class="h4">Enquiries by Service</h2><div class="chart-wrap"><canvas id="serviceChart"></canvas></div></div></div><div class="col-lg-5"><div class="chart-card"><h2 class="h4">Enquiries vs Completed</h2><div class="chart-wrap"><canvas id="successChart"></canvas></div></div></div></div></div></section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+const data = {{ chart|tojson }};
+const colors = ['#164b35','#247554','#f2b632','#176a9b','#c0392b','#7b5ea7','#d47a28','#3d7d88','#8a9a5b','#bc6c75','#355070','#6d8b74','#9b5de5','#00a896','#ee6c4d','#457b9d','#8338ec','#ff7b00','#588157','#bc4749','#4361ee'];
+new Chart(document.getElementById('serviceChart'), {type:'pie',data:{labels:data.labels,datasets:[{data:data.enquiries,backgroundColor:colors}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+const total = data.enquiries.reduce((a,b)=>a+b,0), completed = data.completed.reduce((a,b)=>a+b,0);
+new Chart(document.getElementById('successChart'), {type:'doughnut',data:{labels:['Open / Submitted','Completed'],datasets:[{data:[Math.max(total-completed,0),completed],backgroundColor:['#f2b632','#247554']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+</script>
+{% endblock %}

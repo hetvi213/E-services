@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Services | Krishi Seva Portal{% endblock %}
+{% block content %}
+<header class="page-header py-5">
+    <div class="container py-3">
+        <p class="section-kicker text-warning mb-2">Citizen service directory</p>
+        <h1 class="display-5 fw-bold">Agricultural Services</h1>
+        <p class="lead mb-0 col-lg-8">Explore available schemes and support services, including the documents needed to submit an enquiry.</p>
+    </div>
+</header>
+<section class="py-5">
+    <div class="container">
+        <form class="catalog-search mb-5" method="get" role="search">
+            <div class="input-group input-group-lg shadow-sm">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="search" class="form-control border-start-0" name="q" value="{{ query }}" placeholder="Search services by name or description" aria-label="Search services">
+                <button class="btn btn-success px-4" type="submit">Search</button>
+                {% if query %}<a class="btn btn-outline-secondary d-flex align-items-center" href="{{ url_for('main.services') }}">Clear</a>{% endif %}
+            </div>
+            {% if query %}<p class="text-secondary mt-3 mb-0">Showing results for “{{ query }}”</p>{% endif %}
+        </form>
+        <div class="row g-4">
+            {% for service in services %}
+                {% include "_service_card.html" %}
+            {% else %}
+                <div class="col-12"><div class="empty-state">No services matched your search. Try another keyword.</div></div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

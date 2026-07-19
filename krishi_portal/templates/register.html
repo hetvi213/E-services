@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Register | Krishi Seva Portal{% endblock %}
+{% block content %}
+<section class="auth-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-6">
+                <div class="card border-0 shadow-sm p-2 p-md-4">
+                    <div class="card-body">
+                        <p class="section-kicker mb-2">Citizen registration</p>
+                        <h1 class="h2 fw-bold mb-2">Create your account</h1>
+                        <p class="text-secondary mb-4">Register to submit and track government service enquiries.</p>
+                        <form method="post">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="name" class="form-label">Full name *</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ request.form.get('name', '') }}" maxlength="120" autocomplete="name" required autofocus>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email address *</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ request.form.get('email', '') }}" maxlength="255" autocomplete="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone number *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" value="{{ request.form.get('phone', '') }}" maxlength="20" autocomplete="tel" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password *</label>
+                                    <input type="password" class="form-control" id="password" name="password" minlength="8" autocomplete="new-password" required>
+                                    <div class="form-text">Use at least 8 characters.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="confirm_password" class="form-label">Confirm password *</label>
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" minlength="8" autocomplete="new-password" required>
+                                </div>
+                                <div class="col-12 pt-2">
+                                    <button type="submit" class="btn btn-success btn-lg w-100">Create Account</button>
+                                </div>
+                            </div>
+                        </form>
+                        <p class="text-center text-secondary mt-4 mb-0">Already registered? <a class="link-success fw-semibold" href="{{ url_for('main.login') }}">Log in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

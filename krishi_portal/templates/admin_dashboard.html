@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard | Krishi Seva Portal{% endblock %}
+{% block content %}
+<header class="admin-header py-5"><div class="container"><p class="section-kicker text-warning mb-2">Administration</p><h1 class="display-5 fw-bold">Application Dashboard</h1><p class="lead mb-0">Manage every service application and citizen response.</p></div></header>
+<section class="py-5 bg-light-subtle"><div class="container">
+    {% include "_admin_nav.html" %}
+    <div class="row g-4 mb-5">
+        <div class="col-6 col-lg-3"><div class="admin-stat"><i class="bi bi-grid"></i><strong>{{ stats.services }}</strong><span>Services</span></div></div>
+        <div class="col-6 col-lg-3"><div class="admin-stat"><i class="bi bi-file-earmark-check"></i><strong>{{ stats.applications }}</strong><span>Applications</span></div></div>
+        <div class="col-6 col-lg-3"><div class="admin-stat"><i class="bi bi-people"></i><strong>{{ stats.users }}</strong><span>Citizens</span></div></div>
+        <div class="col-6 col-lg-3"><div class="admin-stat"><i class="bi bi-hourglass-split"></i><strong>{{ stats.pending }}</strong><span>Open</span></div></div>
+    </div>
+    <div class="card border-0 shadow-sm"><div class="card-body p-0"><div class="p-4 border-bottom"><h2 class="h4 mb-0">All Applications</h2></div><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Application</th><th>Citizen</th><th>Service</th><th>Contact</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+    {% for application in applications %}<tr><td><strong>{{ application.app_id }}</strong><br><small>{{ application.created_at.strftime('%d %b %Y') if application.created_at else '--' }}</small></td><td>{{ application.name }}</td><td>{{ application.service_name }}</td><td><a href="mailto:{{ application.email }}">{{ application.email }}</a><br><a class="whatsapp-link" target="_blank" rel="noopener" href="https://wa.me/{{ application.mobile|replace('+','')|replace(' ','')|replace('-','') }}"><i class="bi bi-whatsapp"></i> {{ application.mobile }}</a></td><td><span class="status-badge">{{ application.status }}</span></td><td><div class="admin-actions"><form method="post" action="{{ url_for('main.update_application_status', application_id=application.id) }}"><input type="hidden" name="status" value="Submitted"><button class="btn btn-sm btn-primary" type="submit">Submitted</button></form><form method="post" enctype="multipart/form-data" action="{{ url_for('main.update_application_status', application_id=application.id) }}"><input type="hidden" name="status" value="Completed"><label class="completion-upload"><input type="file" name="completion_file" accept=".pdf,.png,.jpg,.jpeg"><span><i class="bi bi-paperclip"></i> Optional file</span></label><button class="btn btn-sm btn-success" type="submit">Completed</button></form></div></td></tr>
+    {% else %}<tr><td colspan="6" class="text-center text-secondary py-5">No applications have been submitted.</td></tr>{% endfor %}
+    </tbody></table></div></div></div>
+</div></section>
+{% endblock %}

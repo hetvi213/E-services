@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Required Documents | Krishi Seva Portal{% endblock %}
+{% block content %}
+<header class="documents-hero py-5">
+    <div class="container py-3">
+        <p class="section-kicker text-warning mb-2">Application preparation</p>
+        <h1 class="display-5 fw-bold">Detailed Document Requirements</h1>
+        <p class="lead col-lg-8">Search any service and review everything required before starting your application.</p>
+        <div class="document-search mt-4">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input id="documentSearch" type="search" placeholder="Type service or document name..." aria-label="Search document requirements">
+        </div>
+    </div>
+</header>
+
+<section class="py-5 documents-catalog">
+    <div class="container">
+        <div class="document-filters mb-4" role="group" aria-label="Filter document categories">
+            <button class="active" type="button" data-filter="all">All Documents</button>
+            <button type="button" data-filter="personal">Personal KYC &amp; Legal Identity</button>
+            <button type="button" data-filter="business">Business &amp; Commercial</button>
+            <button type="button" data-filter="property">Property &amp; Residence</button>
+        </div>
+
+        <div class="row g-4" id="documentGrid">
+            {% for service in services %}
+                <div class="col-md-6 col-xl-4 document-entry" data-category="{{ service.document_category }}" data-search="{{ (service.name ~ ' ' ~ service.documents)|lower }}">
+                    <article class="document-card h-100">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="document-icon icon-theme-{{ service.icon_theme }}"><i class="bi {{ service.service_icon }}"></i></div>
+                            <h2 class="h5 mb-0">{{ service.name }}</h2>
+                        </div>
+                        {% set availability_class, availability_label = service.availability %}
+                        <span class="availability-badge availability-{{ availability_class }} mb-3">{{ availability_label }}</span>
+                        <h3 class="h6 mt-4">Documents required</h3>
+                        {% if service.document_list %}
+                            <ul class="document-requirements">
+                                {% for document in service.document_list %}<li>{{ document }}</li>{% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-secondary">Please contact the centre for document requirements.</p>
+                        {% endif %}
+                        <div class="document-actions mt-auto pt-3">
+                            <a href="tel:{{ config.PORTAL_PHONE|replace(' ', '') }}" class="btn btn-outline-success"><i class="bi bi-telephone me-2"></i>Call Now</a>
+                            <a href="{{ url_for('main.service_detail', service_id=service.id) }}" class="btn btn-success">View Service</a>
+                        </div>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="empty-state d-none mt-4" id="documentEmpty">No document requirements matched your search.</div>
+    </div>
+</section>
+
+<script>
+(() => {
+    const search = document.getElementById('documentSearch');
+    const entries = [...document.querySelectorAll('.document-entry')];
+    const buttons = [...document.querySelectorAll('[data-filter]')];
+    const empty = document.getElementById('documentEmpty');
+    let category = 'all';
+
+    function applyFilters() {
+        const term = search.value.trim().toLowerCase();
+        let visible = 0;
+        entries.forEach(entry => {
+            const matchesCategory = category === 'all' || entry.dataset.category === category;
+            const matchesSearch = !term || entry.dataset.search.includes(term);
+            const show = matchesCategory && matchesSearch;
+            entry.classList.toggle('d-none', !show);
+            if (show) visible += 1;
+        });
+        empty.classList.toggle('d-none', visible !== 0);
+    }
+
+    search.addEventListener('input', applyFilters);
+    buttons.forEach(button => button.addEventListener('click', () => {
+        buttons.forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        category = button.dataset.filter;
+        applyFilters();
+    }));
+})();
+</script>
+{% endblock %}

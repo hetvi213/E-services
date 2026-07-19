@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ service.name }} | Krishi Seva Portal{% endblock %}
+{% block content %}
+<header class="page-header py-4">
+    <div class="container py-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a class="text-warning" href="{{ url_for('main.home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-warning" href="{{ url_for('main.services') }}">Services</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">{{ service.name }}</li>
+            </ol>
+        </nav>
+        <h1 class="display-5 fw-bold mb-0">{{ service.name }}</h1>
+    </div>
+</header>
+
+<section class="py-5 bg-light-subtle">
+    <div class="container">
+        <div class="card service-detail-card border-0 shadow-sm overflow-hidden">
+            <div class="row g-0">
+                <div class="col-lg-6">
+                    {% if service.image_filename %}
+                        <img src="{{ url_for('static', filename='images/' ~ service.image_filename) }}" class="service-detail-image" alt="{{ service.name }}">
+                    {% else %}
+                        <div class="service-detail-placeholder" aria-hidden="true">&#127963;</div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-body p-4 p-md-5 h-100 d-flex flex-column">
+                        <p class="section-kicker mb-2">Government service</p>
+                        <h2 class="h1 fw-bold">{{ service.name }}</h2>
+                        {% set availability_class, availability_label = service.availability %}
+                        <span class="availability-badge availability-{{ availability_class }} align-self-start mb-3"><i class="bi bi-check-circle me-1"></i>{{ availability_label }}</span>
+                        <p class="lead text-secondary">{{ service.description }}</p>
+
+                        <div class="documents py-4">
+                            <h3 class="h5">Documents required</h3>
+                            {% if service.document_list %}
+                                <ul class="text-secondary mb-0 ps-3">
+                                    {% for document in service.document_list %}
+                                        <li>{{ document }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-secondary mb-0">No document requirements have been specified.</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="mt-auto pt-3">
+                            <div class="service-actions">
+                                <a class="btn btn-call btn-lg" href="tel:{{ config.PORTAL_PHONE|replace(' ', '') }}"><i class="bi bi-telephone-fill me-2"></i>Call Now</a>
+                                <a class="btn btn-success btn-lg" href="{{ url_for('main.contact', service_id=service.id) }}"><i class="bi bi-chat-dots-fill me-2"></i>Enquire Now</a>
+                            </div>
+                            {% if not current_user %}
+                                <p class="small text-secondary text-center mt-2 mb-0">You will be asked to log in or register before submitting an enquiry.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

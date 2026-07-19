@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Home | Krishi Seva Portal{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container py-5">
+        <div class="row align-items-center min-vh-50 py-lg-5">
+            <div class="col-lg-7">
+                <span class="badge rounded-pill text-bg-warning mb-3">Digital services for every farmer</span>
+                <h1 class="display-4 fw-bold">Government agricultural support, made simple.</h1>
+                <p class="lead my-4">Discover schemes, understand document requirements, and connect with the right department through one trusted portal.</p>
+                <form class="hero-search mb-4" action="{{ url_for('main.services') }}" method="get" role="search">
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                    <input type="search" name="q" placeholder="Search passport, Aadhaar, license..." aria-label="Search services" required>
+                    <button type="submit">Search</button>
+                </form>
+                <div class="d-flex flex-wrap gap-3">
+                    <a class="btn btn-warning btn-lg px-4" href="{{ url_for('main.services') }}">Browse Services</a>
+                    <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('main.contact') }}">Get Assistance</a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block text-center">
+                <div class="hero-emblem" aria-hidden="true">&#127806;</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="portal-stats py-4">
+    <div class="container">
+        <div class="row text-center g-3">
+            <div class="col-4"><strong>{{ stats.services }}+</strong><span>Services</span></div>
+            <div class="col-4"><strong>{{ stats.applications }}+</strong><span>Applications</span></div>
+            <div class="col-4"><strong>{{ stats.users }}+</strong><span>Registered Citizens</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light-subtle">
+    <div class="container py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+            <div>
+                <p class="section-kicker mb-2">Popular assistance</p>
+                <h2 class="fw-bold mb-0">Featured Services</h2>
+            </div>
+            <a href="{{ url_for('main.services') }}" class="link-success fw-semibold">View all services &rarr;</a>
+        </div>
+        <div class="row g-4">
+            {% for service in services %}
+                {% include "_service_card.html" %}
+            {% else %}
+                <div class="col-12"><div class="empty-state">Services will appear here once they are added to the database.</div></div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 process-section">
+    <div class="container py-3">
+        <div class="text-center mb-5"><p class="section-kicker mb-2">Simple digital process</p><h2 class="fw-bold">How It Works</h2></div>
+        <div class="row g-4">
+            <div class="col-md-3"><div class="process-step"><span>1</span><i class="bi bi-search"></i><h3>Find a Service</h3><p>Search and review service details, fees, and required documents.</p></div></div>
+            <div class="col-md-3"><div class="process-step"><span>2</span><i class="bi bi-person-check"></i><h3>Login or Register</h3><p>Create a secure citizen account or use your existing credentials.</p></div></div>
+            <div class="col-md-3"><div class="process-step"><span>3</span><i class="bi bi-send-check"></i><h3>Submit Enquiry</h3><p>Choose your service and send the information to our administration team.</p></div></div>
+            <div class="col-md-3"><div class="process-step"><span>4</span><i class="bi bi-clock-history"></i><h3>Track Progress</h3><p>Review your application and payment status from your account.</p></div></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

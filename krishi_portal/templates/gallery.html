@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Service Gallery | Krishi Seva Portal{% endblock %}
+{% block content %}
+<header class="page-header py-5"><div class="container py-3"><p class="section-kicker text-warning mb-2">Explore our work</p><h1 class="display-5 fw-bold">Service Gallery</h1><p class="lead mb-0">Browse the citizen and government services available through our portal.</p></div></header>
+<section class="py-5"><div class="container"><div class="row g-4">{% for service in services %}<div class="col-sm-6 col-lg-4"><a class="gallery-item" href="{{ url_for('main.service_detail', service_id=service.id) }}">{% if service.image_filename %}<img src="{{ url_for('static', filename='images/' ~ service.image_filename) }}" alt="{{ service.name }}" loading="lazy">{% endif %}<div class="gallery-overlay"><h2>{{ service.name }}</h2><span>View service <i class="bi bi-arrow-right"></i></span></div></a></div>{% else %}<div class="empty-state">No gallery items are available.</div>{% endfor %}</div></div></section>
+{% endblock %}
