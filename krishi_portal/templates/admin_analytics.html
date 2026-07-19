@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Admin Analytics | Krishi Seva Portal{% endblock %}
+{% block title %}Admin Analytics | Krishi E-Government Services{% endblock %}
 {% block content %}
 <header class="admin-header py-5"><div class="container"><p class="section-kicker text-warning mb-2">Reporting</p><h1 class="display-5 fw-bold">Service Analytics</h1><p class="lead mb-0">Compare enquiries and successful completions across services.</p></div></header>
 <section class="py-5 bg-light-subtle"><div class="container">{% include "_admin_nav.html" %}<div class="row g-4"><div class="col-lg-7"><div class="chart-card"><h2 class="h4">Enquiries by Service</h2><div class="chart-wrap"><canvas id="serviceChart"></canvas></div></div></div><div class="col-lg-5"><div class="chart-card"><h2 class="h4">Enquiries vs Completed</h2><div class="chart-wrap"><canvas id="successChart"></canvas></div></div></div></div></div></section>

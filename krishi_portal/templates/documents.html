@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Required Documents | Krishi Seva Portal{% endblock %}
+{% block title %}Required Documents | Krishi E-Government Services{% endblock %}
 {% block content %}
 <header class="documents-hero py-5">
     <div class="container py-3">
@@ -31,12 +31,19 @@
                             <h2 class="h5 mb-0">{{ service.name }}</h2>
                         </div>
                         {% set availability_class, availability_label = service.availability %}
-                        <span class="availability-badge availability-{{ availability_class }} mb-3">{{ availability_label }}</span>
-                        <h3 class="h6 mt-4">Documents required</h3>
+                        <span class="availability-badge availability-{{ availability_class }} mb-3 align-self-start">{{ availability_label }}</span>
+                        <h3 class="h6 mt-2">Documents required</h3>
                         {% if service.document_list %}
-                            <ul class="document-requirements">
-                                {% for document in service.document_list %}<li>{{ document }}</li>{% endfor %}
+                            <ul class="document-requirements" id="documents-{{ service.id }}">
+                                {% for document in service.document_list %}
+                                    <li{% if loop.index > 3 %} class="document-extra"{% endif %}>{{ document }}</li>
+                                {% endfor %}
                             </ul>
+                            {% if service.document_list|length > 3 %}
+                                <button class="document-toggle" type="button" aria-expanded="false" aria-controls="documents-{{ service.id }}">
+                                    <span>Read More</span><i class="bi bi-chevron-down" aria-hidden="true"></i>
+                                </button>
+                            {% endif %}
                         {% else %}
                             <p class="text-secondary">Please contact the centre for document requirements.</p>
                         {% endif %}
@@ -57,6 +64,7 @@
     const search = document.getElementById('documentSearch');
     const entries = [...document.querySelectorAll('.document-entry')];
     const buttons = [...document.querySelectorAll('[data-filter]')];
+    const toggles = [...document.querySelectorAll('.document-toggle')];
     const empty = document.getElementById('documentEmpty');
     let category = 'all';
 
@@ -79,6 +87,15 @@
         button.classList.add('active');
         category = button.dataset.filter;
         applyFilters();
+    }));
+
+    toggles.forEach(toggle => toggle.addEventListener('click', () => {
+        const card = toggle.closest('.document-card');
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        card.classList.toggle('documents-expanded', !expanded);
+        toggle.querySelector('span').textContent = expanded ? 'Read More' : 'Read Less';
+        toggle.querySelector('i').className = expanded ? 'bi bi-chevron-down' : 'bi bi-chevron-up';
     }));
 })();
 </script>

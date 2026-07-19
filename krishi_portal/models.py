@@ -136,3 +136,28 @@ class Application(db.Model):
 
     service = db.relationship("Service", backref=db.backref("applications", lazy=True))
     user = db.relationship("User", backref=db.backref("applications", lazy=True))
+
+
+class ApplicationCompletion(db.Model):
+    __tablename__ = "application_completions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    application_id = db.Column(
+        db.Integer,
+        db.ForeignKey("application.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    comment = db.Column(db.Text, nullable=True)
+    file_path = db.Column(db.String(500), nullable=True)
+    original_filename = db.Column(db.String(255), nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    application = db.relationship(
+        "Application",
+        backref=db.backref("completion", uselist=False, cascade="all, delete-orphan"),
+    )
+
+    @property
+    def is_image(self):
+        return bool(self.file_path and self.file_path.lower().endswith((".png", ".jpg", ".jpeg")))

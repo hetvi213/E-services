@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename
 
 from krishi_portal import db
 from krishi_portal.mailer import send_admin_email, send_email
-from krishi_portal.models import AdminAccount, Application, Service, User
+from krishi_portal.models import AdminAccount, Application, ApplicationCompletion, Service, User
 
 
 main_bp = Blueprint("main", __name__)
@@ -248,12 +248,20 @@ def admin_dashboard():
 def update_application_status(application_id):
     application = db.get_or_404(Application, application_id)
     status = request.form.get("status", "")
-    if status not in {"Submitted", "Completed"}:
+    if status not in {"Enquiry", "Submitted", "Completed"}:
         flash("Invalid application status.", "danger")
         return redirect(url_for("main.admin_dashboard"))
 
+    if status != "Completed":
+        application.status = status
+        db.session.commit()
+        flash(f"Application marked as {status.lower()}.", "success")
+        return redirect(url_for("main.admin_dashboard"))
+
     attachment = None
+    comment = request.form.get("completion_comment", "").strip()
     uploaded = request.files.get("completion_file")
+    completion = application.completion or ApplicationCompletion(application=application)
     if uploaded and uploaded.filename:
         filename = secure_filename(uploaded.filename)
         extension = Path(filename).suffix.lower()
@@ -266,27 +274,31 @@ def update_application_status(application_id):
         file_path = completion_dir / stored_name
         uploaded.save(file_path)
         application.document_path = f"completions/{stored_name}"
+        completion.file_path = application.document_path
+        completion.original_filename = filename
         mime_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
         attachment = (str(file_path), filename, mime_type)
 
-    application.status = status
+    completion.comment = comment or None
+    if completion.id is None:
+        db.session.add(completion)
+    application.status = "Completed"
     db.session.commit()
 
-    if status == "Completed":
-        delivered = send_email(
-            application.email,
-            f"Application completed: {application.app_id}",
-            f"Hello {application.name},\n\nYour application for {application.service_name} "
-            f"has been completed.\nApplication ID: {application.app_id}\n\nRegards,\nKrishi Seva",
-            attachment=attachment,
-        )
-        flash(
-            "Application completed and the citizen was emailed." if delivered
-            else "Application completed, but the citizen email could not be delivered.",
-            "success" if delivered else "warning",
-        )
-    else:
-        flash("Application marked as submitted.", "success")
+    comment_text = f"\n\nAdministrator comment:\n{comment}" if comment else ""
+    delivered = send_email(
+        application.email,
+        f"Application completed: {application.app_id}",
+        f"Hello {application.name},\n\nYour application for {application.service_name} "
+        f"has been completed.\nApplication ID: {application.app_id}{comment_text}"
+        f"\n\nRegards,\nKrishi E-Government Services",
+        attachment=attachment,
+    )
+    flash(
+        "Application completed and the citizen was emailed." if delivered
+        else "Application completed, but the citizen email could not be delivered.",
+        "success" if delivered else "warning",
+    )
     return redirect(url_for("main.admin_dashboard"))
 
 

@@ -1,11 +1,8 @@
 from flask import Flask, g, session
 from flask_sqlalchemy import SQLAlchemy
-
 from config import Config
 
-
 db = SQLAlchemy()
-
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -14,11 +11,12 @@ def create_app(config_class=Config):
     db.init_app(app)
 
     from krishi_portal.routes import main_bp
-    from krishi_portal.models import AdminAccount, User
+    from krishi_portal.models import AdminAccount, ApplicationCompletion, User
     from werkzeug.security import generate_password_hash
 
     with app.app_context():
         AdminAccount.__table__.create(bind=db.engine, checkfirst=True)
+        ApplicationCompletion.__table__.create(bind=db.engine, checkfirst=True)
         if not db.session.scalar(db.select(AdminAccount).limit(1)):
             admin_email = app.config["ADMIN_LOGIN_EMAIL"].strip().lower()
             admin_password = app.config["ADMIN_LOGIN_PASSWORD"]
@@ -43,5 +41,4 @@ def create_app(config_class=Config):
             "current_user": g.get("user"),
             "current_admin": session.get("is_admin", False),
         }
-
     return app

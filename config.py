@@ -29,7 +29,7 @@ class Config:
         "pool_recycle": 280,
     }
     ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@example.com")
-    PORTAL_ADDRESS = os.getenv("PORTAL_ADDRESS", "Krishi Seva Kendra, Main Road, Ahmedabad, Gujarat")
+    PORTAL_ADDRESS = os.getenv("PORTAL_ADDRESS", "Krishi E-Government Services, Main Road, Ahmedabad, Gujarat")
     PORTAL_PHONE = os.getenv("PORTAL_PHONE", "+91 98765 43210")
     PORTAL_EMAIL = os.getenv("PORTAL_EMAIL", ADMIN_EMAIL)
     SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
