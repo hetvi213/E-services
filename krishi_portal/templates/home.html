@@ -107,8 +107,8 @@
 <section class="home-updates py-5">
     <div class="container py-3">
         <div class="mb-4"><p class="section-kicker mb-2">Quick assistance</p><h2 class="fw-bold">Help &amp; Specialized Services</h2></div>
-        <div class="row g-4 gx-lg-5 align-items-stretch">
-            <div class="col-lg-5">
+        <div class="row g-4 home-assistance-row align-items-stretch">
+            <div class="col-lg-6 home-assistance-column">
                 <div class="home-help-card h-100">
                     <h3 class="h4 text-center fw-bold mb-4">WE ARE HERE TO HELP YOU</h3>
                     <form method="post" action="{{ url_for('main.contact') }}" novalidate>
@@ -130,12 +130,12 @@
                     </form>
                 </div>
             </div>
-            <div class="col-lg-7">
+            <div class="col-lg-6 home-assistance-column">
                 <div class="home-quick-card h-100">
                     <p class="section-kicker text-warning mb-2">Quick links</p>
                     <h3 class="h4 text-white fw-bold mb-4">Our Specialized Services</h3>
                     <div class="home-quick-links">
-                        {% for service in services %}
+                        {% for service in enquiry_services[:12] %}
                         <a href="{{ url_for('main.service_detail', service_id=service.id) }}"><i class="bi bi-box-arrow-up-right"></i><span>{{ service.name }}</span></a>
                         {% endfor %}
                     </div>
