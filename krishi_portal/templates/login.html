@@ -7,22 +7,22 @@
             <div class="col-md-8 col-lg-5">
                 <div class="card border-0 shadow-sm p-2 p-md-4">
                     <div class="card-body">
-                        <p class="section-kicker mb-2">Citizen account</p>
+                        <p class="section-kicker mb-2">User account</p>
                         <h1 class="h2 fw-bold mb-2">Welcome back</h1>
                         <p class="text-secondary mb-4">Log in with your registered email address to submit a service enquiry.</p>
                         <form method="post">
                             <input type="hidden" name="next" value="{{ next_url }}">
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
+                                <label for="email" class="form-label">Email address *</label>
                                 <input type="email" class="form-control" id="email" name="email" value="{{ request.form.get('email', '') }}" autocomplete="email" required autofocus>
                             </div>
                             <div class="mb-4">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="password" class="form-label">Password *</label>
                                 <input type="password" class="form-control" id="password" name="password" autocomplete="current-password" required>
                             </div>
                             <button type="submit" class="btn btn-success btn-lg w-100">Login</button>
                         </form>
-                        <p class="text-center text-secondary mt-4 mb-0">Don't have an account? <a class="link-success fw-semibold" href="{{ url_for('main.register') }}">Register now</a></p>
+                        <p class="text-center text-secondary mt-4 mb-0">Don't have an account? <a class="link-success fw-semibold" href="{{ url_for('main.register') }}">Register</a></p>
                     </div>
                 </div>
             </div>

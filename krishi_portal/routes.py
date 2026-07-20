@@ -64,17 +64,19 @@ def password_matches(user, submitted_password):
 
 @main_bp.route("/")
 def home():
-    featured_services = db.session.scalars(
-        select(Service)
-        .order_by(Service.service_id)
-        .limit(6)
-    ).all()
+    all_services = db.session.scalars(select(Service).order_by(Service.service_id)).all()
+    featured_services = all_services[:6]
+    document_services = sorted(
+        all_services,
+        key=lambda service: len(service.document_list),
+        reverse=True,
+    )[:2]
     stats = {
         "services": db.session.scalar(select(func.count(Service.service_id))) or 0,
         "applications": db.session.scalar(select(func.count(Application.id))) or 0,
         "users": db.session.scalar(select(func.count(User.user_id))) or 0,
     }
-    return render_template("home.html", services=featured_services, stats=stats)
+    return render_template("home.html", services=featured_services, enquiry_services=all_services, document_services=document_services, stats=stats)
 
 
 @main_bp.route("/services")

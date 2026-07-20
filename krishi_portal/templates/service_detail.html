@@ -1,22 +1,17 @@
 {% extends "base.html" %}
 {% block title %}{{ service.name }} | Krishi E-Government Services{% endblock %}
 {% block content %}
-<header class="detail-hero py-5">
+<header class="page-header py-5">
     <div class="container py-3">
-        <nav aria-label="breadcrumb"><ol class="breadcrumb detail-breadcrumb mb-4"><li class="breadcrumb-item"><a href="{{ url_for('main.home') }}">Home</a></li><li class="breadcrumb-item"><a href="{{ url_for('main.services') }}">Services</a></li><li class="breadcrumb-item active" aria-current="page">{{ service.name }}</li></ol></nav>
-        <div class="row align-items-center g-4">
-            <div class="col-lg-8">
-                <p class="detail-eyebrow mb-2">Detailed service requirements</p>
-                <h1 class="detail-heading">{{ service.name }}</h1>
-                <p class="lead mb-0">Review the service information and prepare every required document before submitting your enquiry.</p>
-            </div>
-            <div class="col-lg-4 text-lg-end"><div class="detail-hero-icon ms-lg-auto"><i class="bi {{ service.service_icon }}"></i></div></div>
-        </div>
+        <p class="section-kicker text-warning mb-2">Detailed service requirements</p>
+        <h1 class="display-5 fw-bold">{{ service.name }}</h1>
+        <p class="lead mb-0">Review the service information and prepare every required document before submitting your enquiry.</p>
     </div>
 </header>
 
 <section class="detail-section py-5">
     <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb mb-4"><li class="breadcrumb-item"><a href="{{ url_for('main.home') }}">Home</a></li><li class="breadcrumb-item"><a href="{{ url_for('main.services') }}">Services</a></li><li class="breadcrumb-item active" aria-current="page">{{ service.name }}</li></ol></nav>
         <div class="row g-4 align-items-stretch">
             <div class="col-lg-7">
                 <article class="requirement-card h-100">
@@ -33,7 +28,7 @@
                 </article>
             </div>
             <div class="col-lg-5">
-                <aside class="detail-image-card h-100">
+                <aside class="detail-image-card">
                     {% if service.image_filename %}<img src="{{ url_for('static', filename='images/' ~ service.image_filename) }}" alt="{{ service.name }}">{% else %}<div class="service-detail-placeholder"><i class="bi {{ service.service_icon }}"></i></div>{% endif %}
                     <div class="detail-help"><i class="bi bi-headset"></i><div><h2 class="h5">Need assistance?</h2><p class="mb-0">Our support team can help confirm requirements and guide your application.</p></div></div>
                 </aside>

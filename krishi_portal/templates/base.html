@@ -93,16 +93,25 @@
                 </div>
                 <div class="col-6 col-lg-5">
                     <h2 class="h6 text-white text-uppercase">Contact Information</h2>
-                    <address class="mb-0">
-                        <p class="mb-2">{{ config.PORTAL_ADDRESS }}</p>
-                        <p class="mb-2"><a href="mailto:{{ config.PORTAL_EMAIL }}">{{ config.PORTAL_EMAIL }}</a></p>
-                        <p class="mb-0"><a href="tel:{{ config.PORTAL_PHONE|replace(' ', '') }}">{{ config.PORTAL_PHONE }}</a></p>
+                    <address class="footer-contact mb-0">
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query={{ config.PORTAL_ADDRESS|urlencode }}" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-geo-alt-fill" aria-hidden="true"></i><span>{{ config.PORTAL_ADDRESS }}</span>
+                        </a>
+                        <a href="mailto:{{ config.PORTAL_EMAIL }}">
+                            <i class="bi bi-envelope-fill" aria-hidden="true"></i><span>{{ config.PORTAL_EMAIL }}</span>
+                        </a>
+                        <a href="tel:{{ config.PORTAL_PHONE|replace(' ', '') }}">
+                            <i class="bi bi-telephone-fill" aria-hidden="true"></i><span>{{ config.PORTAL_PHONE }}</span>
+                        </a>
+                        <a href="https://wa.me/{{ config.PORTAL_PHONE|replace('+', '')|replace(' ', '')|replace('-', '') }}" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-whatsapp" aria-hidden="true"></i><span>{{ config.PORTAL_PHONE }}</span>
+                        </a>
                     </address>
                 </div>
             </div>
-            <div class="footer-bottom pt-3 d-md-flex justify-content-between text-center text-md-start">
-                <p class="mb-2 mb-md-0">&copy; 2026 Krishi E-Government Services. All rights reserved.</p>
-                <p class="mb-0">Transparent &middot; Accessible &middot; Citizen-first</p>
+            <div class="footer-bottom pt-3 text-center">
+                <p class="mb-0">&copy; 2026 Krishi E-Government Services. All rights reserved.</p>
+                <!-- <p class="mb-0">Transparent &middot; Accessible &middot; Citizen-first</p> -->
             </div>
         </div>
     </footer>

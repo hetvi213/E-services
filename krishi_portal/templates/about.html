@@ -1,6 +1,97 @@
 {% extends "base.html" %}
 {% block title %}About Us | Krishi E-Government Services{% endblock %}
 {% block content %}
-<header class="page-header py-5"><div class="container py-3"><p class="section-kicker text-warning mb-2">Who we are</p><h1 class="display-5 fw-bold">About Krishi E-Government Services</h1><p class="lead col-lg-8 mb-0">Connecting citizens with essential public services through a clear, secure, and accessible digital experience.</p></div></header>
-<section class="py-5"><div class="container"><div class="row g-5 align-items-center"><div class="col-lg-6"><img src="{{ url_for('static', filename='images/aboutUs.avif') }}" class="img-fluid rounded-4 shadow-sm content-image about-us-image" alt="About Krishi E-Government Services"></div><div class="col-lg-6"><h2 class="fw-bold">One portal. Trusted assistance.</h2><p class="text-secondary">Krishi E-Government Services helps citizens understand available government services, required documents, applicable charges, and the enquiry process without unnecessary complexity.</p><p class="text-secondary">Our goal is to make service information transparent and help every application reach the appropriate administration team efficiently.</p><div class="p-4 rounded-4 bg-light"><h3 class="h5">Our commitments</h3><ul class="mb-0 text-secondary"><li class="mb-2">Clear service and document information</li><li class="mb-2">Secure citizen accounts</li><li class="mb-2">Responsive assistance</li><li>Transparent application communication</li></ul></div></div></div></div></section>
+<header class="page-header py-5">
+    <div class="container py-3">
+        <p class="section-kicker text-warning mb-2">Who we are</p>
+        <h1 class="display-5 fw-bold">About Krishi E-Government Services</h1>
+        <p class="lead mb-0">A citizen-friendly digital platform making essential government services clearer, faster, and more accessible.</p>
+    </div>
+</header>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center mb-5">
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='images/aboutUs.avif') }}" class="img-fluid rounded-4 shadow-sm content-image about-us-image" alt="Digital access to government services">
+            </div>
+            <div class="col-lg-6">
+                <p class="section-kicker mb-2">Our story</p>
+                <h2 class="fw-bold mb-3">One portal. Trusted assistance.</h2>
+                <p class="text-secondary">Krishi E-Government Services is an initiative focused on making government documentation easier, faster, and more accessible for everyone.</p>
+                <p class="text-secondary mb-0">Whether citizens need to apply for a PAN card, update Aadhaar details, or request an official certificate, our platform brings service information, document guidance, secure enquiries, and application support together in a few simple steps.</p>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <article class="about-purpose-card h-100">
+                    <span class="about-purpose-icon"><i class="bi bi-eye" aria-hidden="true"></i></span>
+                    <h2 class="h3 fw-bold">Our Vision</h2>
+                    <p class="text-secondary mb-0">To create a unified, citizen-friendly digital platform that simplifies access to government services while ensuring transparency, efficiency, security, and trust for every individual.</p>
+                </article>
+            </div>
+            <div class="col-md-6">
+                <article class="about-purpose-card h-100">
+                    <span class="about-purpose-icon"><i class="bi bi-bullseye" aria-hidden="true"></i></span>
+                    <h2 class="h3 fw-bold">Our Mission</h2>
+                    <p class="text-secondary mb-0">To simplify applications for government documents, support transparent communication, enable secure interactions, and guide citizens from their first enquiry through completion.</p>
+                </article>
+            </div>
+        </div>
+
+        <div class="text-center mb-4">
+            <p class="section-kicker mb-2">What we help with</p>
+            <h2 class="fw-bold">Our Core Services</h2>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <article class="about-service-card h-100">
+                    <i class="bi bi-credit-card-2-front" aria-hidden="true"></i>
+                    <h3 class="h5 fw-bold">PAN Card Services</h3>
+                    <p class="text-secondary mb-0">Guidance for new PAN card applications and corrections, completed clearly and securely.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="about-service-card h-100">
+                    <i class="bi bi-person-vcard" aria-hidden="true"></i>
+                    <h3 class="h5 fw-bold">Aadhaar Updates</h3>
+                    <p class="text-secondary mb-0">Straightforward support for updating Aadhaar information through guided steps.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="about-service-card h-100">
+                    <i class="bi bi-file-earmark-check" aria-hidden="true"></i>
+                    <h3 class="h5 fw-bold">Certificates</h3>
+                    <p class="text-secondary mb-0">Help with income, marriage, domicile, and other official certificate applications.</p>
+                </article>
+            </div>
+        </div>
+
+        <div class="about-commitment rounded-4 p-4 p-lg-5 mb-5">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-5">
+                    <p class="section-kicker mb-2">What matters to us</p>
+                    <h2 class="fw-bold mb-2">A reliable experience for every citizen</h2>
+                    <p class="text-secondary mb-0">We combine technology and transparency to remove unnecessary complexity from public-service applications.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3">
+                        <div class="col-sm-6"><div class="commitment-item"><i class="bi bi-check-circle-fill"></i> Clear service and document information</div></div>
+                        <div class="col-sm-6"><div class="commitment-item"><i class="bi bi-shield-check"></i> Secure citizen accounts</div></div>
+                        <div class="col-sm-6"><div class="commitment-item"><i class="bi bi-chat-dots"></i> Transparent communication</div></div>
+                        <div class="col-sm-6"><div class="commitment-item"><i class="bi bi-headset"></i> Responsive assistance</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-contact text-center rounded-4 p-4 p-lg-5">
+            <i class="bi bi-question-circle-fill" aria-hidden="true"></i>
+            <h2 class="fw-bold mt-2">Need help or have questions?</h2>
+            <p class="mb-4">Reach out to our support team for friendly assistance.</p>
+            <a href="{{ url_for('main.contact_us') }}" class="btn btn-warning fw-bold px-4 py-2"><i class="bi bi-envelope me-2"></i>Contact Support</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -17,12 +17,22 @@
                     <img src="{{ url_for('static', filename='images/contactUs.png') }}" class="contact-image" alt="Contact Krishi E-Government Services by email or phone">
                     <div class="contact-panel p-4 p-md-5">
                         <h2 class="h4 text-white mb-3">Contact details</h2>
-                        <p class="mb-4">{{ config.PORTAL_ADDRESS }}</p>
+                        <a class="contact-detail-link contact-address mb-4" href="https://www.google.com/maps/search/?api=1&amp;query={{ config.PORTAL_ADDRESS|urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="View our location on Google Maps">
+                            <i class="bi bi-geo-alt-fill me-2" aria-hidden="true"></i><span>{{ config.PORTAL_ADDRESS }}</span>
+                        </a>
                         <hr>
                         <p class="mb-2">Email</p>
-                        <a href="mailto:{{ config.PORTAL_EMAIL }}">{{ config.PORTAL_EMAIL }}</a>
+                        <a class="contact-detail-link" href="mailto:{{ config.PORTAL_EMAIL }}">
+                            <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>{{ config.PORTAL_EMAIL }}
+                        </a>
                         <p class="mb-2 mt-4">Phone</p>
-                        <a href="tel:{{ config.PORTAL_PHONE|replace(' ', '') }}">{{ config.PORTAL_PHONE }}</a>
+                        <a class="contact-detail-link" href="tel:{{ config.PORTAL_PHONE|replace(' ', '') }}">
+                            <i class="bi bi-telephone-fill me-2" aria-hidden="true"></i>{{ config.PORTAL_PHONE }}
+                        </a>
+                        <p class="mb-2 mt-4">WhatsApp</p>
+                        <a class="contact-detail-link contact-whatsapp-link" href="https://wa.me/{{ config.PORTAL_PHONE|replace('+', '')|replace(' ', '')|replace('-', '') }}" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+                            <i class="bi bi-whatsapp me-2" aria-hidden="true"></i>{{ config.PORTAL_PHONE }}
+                        </a>
                     </div>
                 </div>
             </div>

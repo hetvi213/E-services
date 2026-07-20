@@ -5,9 +5,9 @@
     <div class="container py-5">
         <div class="row align-items-center min-vh-50 py-lg-5">
             <div class="col-lg-7">
-                <span class="badge rounded-pill text-bg-warning mb-3">Digital services for every farmer</span>
-                <h1 class="display-4 fw-bold">Government agricultural support, made simple.</h1>
-                <p class="lead my-4">Discover schemes, understand document requirements, and connect with the right department through one trusted portal.</p>
+                <span class="badge rounded-pill text-bg-warning mb-3">Digital services for every users</span>
+                <h1 class="display-4 fw-bold">Government services support, made simple.</h1>
+                <p class="lead my-4">Discover services, understand document requirements, and connect through these trusted portal.</p>
                 <form class="hero-search mb-4" action="{{ url_for('main.services') }}" method="get" role="search">
                     <i class="bi bi-search" aria-hidden="true"></i>
                     <input type="search" name="q" placeholder="Search passport, Aadhaar, license..." aria-label="Search services" required>
@@ -35,6 +35,23 @@
     </div>
 </section>
 
+<section class="home-about py-5">
+    <div class="container py-3">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-7">
+                <p class="section-kicker mb-2">About Krishi E-Government Services</p>
+                <h2 class="fw-bold mb-3">Reliable guidance for essential government services</h2>
+                <p class="text-secondary">We help citizens understand government services, required documents, and the enquiry process through one clear and accessible digital platform.</p>
+                <p class="text-secondary">From PAN and Aadhaar assistance to certificates, registrations, and legal documentation, our goal is to make every step simpler and more transparent.</p>
+                <a class="btn btn-success px-4" href="{{ url_for('main.about') }}">Read About Us <i class="bi bi-arrow-right ms-2"></i></a>
+            </div>
+            <div class="col-lg-5">
+                <img class="home-about-image" src="{{ url_for('static', filename='images/aboutUs.avif') }}" alt="About Krishi E-Government Services">
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="py-5 bg-light-subtle">
     <div class="container py-3">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
@@ -42,7 +59,7 @@
                 <p class="section-kicker mb-2">Popular assistance</p>
                 <h2 class="fw-bold mb-0">Featured Services</h2>
             </div>
-            <a href="{{ url_for('main.services') }}" class="link-success fw-semibold">View all services &rarr;</a>
+            <a href="{{ url_for('main.services') }}" class="btn btn-success home-section-link">View All Services <i class="bi bi-arrow-right ms-2"></i></a>
         </div>
         <div class="row g-4">
             {% for service in services %}
@@ -50,6 +67,81 @@
             {% else %}
                 <div class="col-12"><div class="empty-state">Services will appear here once they are added to the database.</div></div>
             {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="home-documents py-5">
+    <div class="container py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+            <div>
+                <p class="section-kicker mb-2">Application preparation</p>
+                <h2 class="fw-bold mb-0">Check Your Document Requirements</h2>
+            </div>
+            <a href="{{ url_for('main.documents') }}" class="btn btn-success home-section-link">View All Documents <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+        <div class="row g-4">
+            {% for service in document_services %}
+            <div class="col-lg-6">
+                <article class="home-document-card h-100">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="document-icon icon-theme-{{ service.icon_theme }}"><i class="bi {{ service.service_icon }}"></i></div>
+                        <div><p class="section-kicker mb-1">{{ service.name }}</p><h3 class="h5 fw-bold mb-0">Documents Required</h3></div>
+                    </div>
+                    {% if service.document_list %}
+                    <ul class="home-document-list">
+                        {% for document in service.document_list[:5] %}<li><i class="bi bi-check-circle-fill"></i>{{ document }}</li>{% endfor %}
+                    </ul>
+                    {% else %}<p class="text-secondary">Contact our team to confirm the latest requirements.</p>{% endif %}
+                    <a href="{{ url_for('main.service_detail', service_id=service.id) }}" class="service-click-btn mt-auto">View Service <i class="bi bi-arrow-right"></i></a>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a class="btn btn-outline-success btn-lg px-4" href="{{ url_for('main.documents') }}">Explore More Documents <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+</section>
+
+<section class="home-updates py-5">
+    <div class="container py-3">
+        <div class="mb-4"><p class="section-kicker mb-2">Quick assistance</p><h2 class="fw-bold">Help &amp; Specialized Services</h2></div>
+        <div class="row g-4 gx-lg-5 align-items-stretch">
+            <div class="col-lg-5">
+                <div class="home-help-card h-100">
+                    <h3 class="h4 text-center fw-bold mb-4">WE ARE HERE TO HELP YOU</h3>
+                    <form method="post" action="{{ url_for('main.contact') }}" novalidate>
+                        <label class="form-label" for="homeHelpName">Full name *</label>
+                        <input type="text" class="form-control mb-3" id="homeHelpName" name="name" value="{{ current_user.name if current_user else '' }}" maxlength="120" required>
+                        <label class="form-label" for="homeHelpPhone">Phone number *</label>
+                        <input type="tel" class="form-control mb-3" id="homeHelpPhone" name="phone" value="{{ current_user.phone if current_user and current_user.phone else '' }}" maxlength="20" required>
+                        <label class="form-label" for="homeHelpEmail">Email address *</label>
+                        <input type="email" class="form-control mb-3" id="homeHelpEmail" name="email" value="{{ current_user.email if current_user else '' }}" maxlength="255" required>
+                        <label class="form-label" for="homeHelpService">Service of interest *</label>
+                        <select class="form-select mb-3" id="homeHelpService" name="service_id" required>
+                            <option value="">Select a service</option>
+                            {% for service in enquiry_services %}<option value="{{ service.id }}">{{ service.name }}</option>{% endfor %}
+                        </select>
+                        <label class="form-label" for="homeHelpMessage">How can we help? *</label>
+                        <textarea class="form-control mb-4" id="homeHelpMessage" name="message" rows="4" required></textarea>
+                        <button class="btn btn-warning w-100 fw-bold py-3" type="submit">SUBMIT ENQUIRY</button>
+                        {% if not current_user %}<p class="small text-center mt-3 mb-0">Login or register to submit an enquiry.</p>{% endif %}
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="home-quick-card h-100">
+                    <p class="section-kicker text-warning mb-2">Quick links</p>
+                    <h3 class="h4 text-white fw-bold mb-4">Our Specialized Services</h3>
+                    <div class="home-quick-links">
+                        {% for service in services %}
+                        <a href="{{ url_for('main.service_detail', service_id=service.id) }}"><i class="bi bi-box-arrow-up-right"></i><span>{{ service.name }}</span></a>
+                        {% endfor %}
+                    </div>
+                    <a class="btn btn-warning w-100 fw-bold mt-4" href="{{ url_for('main.services') }}">More Services <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -62,6 +154,35 @@
             <div class="col-md-3"><div class="process-step"><span>2</span><i class="bi bi-person-check"></i><h3>Login or Register</h3><p>Create a secure citizen account or use your existing credentials.</p></div></div>
             <div class="col-md-3"><div class="process-step"><span>3</span><i class="bi bi-send-check"></i><h3>Submit Enquiry</h3><p>Choose your service and send the information to our administration team.</p></div></div>
             <div class="col-md-3"><div class="process-step"><span>4</span><i class="bi bi-clock-history"></i><h3>Track Progress</h3><p>Review your application and payment status from your account.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="home-support py-5">
+    <div class="container py-3">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+                <p class="section-kicker text-warning mb-2">Citizen support</p>
+                <h2 class="fw-bold text-white">Need help choosing a service?</h2>
+                <p class="mb-0">Tell us what you need and our support team will guide you to the appropriate service and document requirements.</p>
+            </div>
+            <div class="col-lg-5 d-flex flex-wrap gap-3 justify-content-lg-end">
+                <a class="btn btn-warning btn-lg" href="{{ url_for('main.contact_us') }}"><i class="bi bi-chat-dots-fill me-2"></i>Contact Support</a>
+                <a class="btn btn-outline-light btn-lg" href="{{ url_for('main.services') }}">Browse Services</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light-subtle">
+    <div class="container py-3 home-faq">
+        <div class="text-center mb-4"><p class="section-kicker mb-2">Common questions</p><h2 class="fw-bold">Your Service Queries Answered</h2></div>
+        <div class="accordion" id="homeFaq">
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne">How do I know which documents are required?</button></h3><div id="faqOne" class="accordion-collapse collapse show"><div class="accordion-body">Open the Documents page or select any service to review its current document requirements before sending an enquiry.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo">Can I track an enquiry after submitting it?</button></h3><div id="faqTwo" class="accordion-collapse collapse"><div class="accordion-body">Yes. Registered citizens can use My Applications to review submitted enquiries and their latest status.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree">How can your team assist with passport documentation?</button></h3><div id="faqThree" class="accordion-collapse collapse"><div class="accordion-body">We help you review the listed address, identity, and supporting document requirements before you submit a passport-service enquiry.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour">What should I do if information differs across my documents?</button></h3><div id="faqFour" class="accordion-collapse collapse"><div class="accordion-body">Contact our support team with details of the mismatch. We can direct you to the relevant correction service and explain its document requirements.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFive">Are my submitted account and enquiry details secure?</button></h3><div id="faqFive" class="accordion-collapse collapse"><div class="accordion-body">The portal uses authenticated citizen accounts and limits application-management access to the administration workflow.</div></div></div>
         </div>
     </div>
 </section>

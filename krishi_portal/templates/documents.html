@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Required Documents | Krishi E-Government Services{% endblock %}
 {% block content %}
-<header class="documents-hero py-5">
+<header class="page-header py-5">
     <div class="container py-3">
         <p class="section-kicker text-warning mb-2">Application preparation</p>
         <h1 class="display-5 fw-bold">Detailed Document Requirements</h1>
-        <p class="lead col-lg-8">Search any service and review everything required before starting your application.</p>
-        <div class="document-search mt-4">
-            <i class="bi bi-search" aria-hidden="true"></i>
-            <input id="documentSearch" type="search" placeholder="Type service or document name..." aria-label="Search document requirements">
-        </div>
+        <p class="lead mb-0">Search any service and review everything required before starting your application.</p>
     </div>
 </header>
 
 <section class="py-5 documents-catalog">
     <div class="container">
+        <div class="document-search document-search-light mb-4">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input id="documentSearch" type="search" placeholder="Type service or document name..." aria-label="Search document requirements">
+        </div>
         <div class="document-filters mb-4" role="group" aria-label="Filter document categories">
             <button class="active" type="button" data-filter="all">All Documents</button>
             <button type="button" data-filter="personal">Personal KYC &amp; Legal Identity</button>
